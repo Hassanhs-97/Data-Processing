@@ -69,15 +69,15 @@ func CreateData(c *gin.Context) {
 		return
 	}
 
-	// calculate and check data volume for the current month
-	if !CheckDataVolume(data.UserID, len(data.Payload)) {
-		c.JSON(http.StatusForbidden, gin.H{"error": "Data volume exceeded for this month"})
-		return
-	}
-
 	// Check for data duplication
 	if IsDuplicateData(data.ID) {
 		c.JSON(http.StatusConflict, gin.H{"error": "Data already exists"})
+		return
+	}
+
+	// calculate and check data volume for the current month
+	if !CheckDataVolume(data.UserID, len(data.Payload)) {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Data volume exceeded for this month"})
 		return
 	}
 
