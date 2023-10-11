@@ -15,11 +15,11 @@ import (
 
 var (
 	userQuotas       = make(map[string]int)  // Map to store user request counts
-	processedData    = make(map[string]bool) // Map to store processed data IDs
-	userDataVolume   = make(map[string]map[string]int)
 	rateLimit        int
 	monthlyDataLimit int
+	processedData    = make(map[string]bool) // Map to store processed data IDs
 	mu               sync.Mutex
+	userDataVolume   = make(map[string]map[string]int)
 	userDataVolumeMu sync.Mutex
 	userQuotasMu     sync.Mutex
 )
@@ -114,7 +114,7 @@ func CheckDataVolume(userID string, dataLength int) bool {
 
 	if userVolume, ok := userDataVolume[userID]; ok {
 		if monthVolume, ok := userVolume[currentMonth]; ok {
-			if monthVolume+dataLength > monthlyDataLimit {
+			if monthVolume + dataLength > monthlyDataLimit {
 				return false
 			}
 			userDataVolume[userID][currentMonth] += dataLength
@@ -122,7 +122,7 @@ func CheckDataVolume(userID string, dataLength int) bool {
 			userVolume[currentMonth] = dataLength
 		}
 	} else {
-		userDataVolume[userID] = make(map[string]int)
+		userDataVolume[userID]               = make(map[string]int)
 		userDataVolume[userID][currentMonth] = dataLength
 	}
 
