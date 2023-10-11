@@ -11,8 +11,13 @@ import (
 func main() {
 	r := gin.Default()
 
-	r.POST("/process-data", handlers.CreateData)
+	dataProcessingGroup := r.Group("/process-data")
+	dataProcessingGroup.POST("/", handlers.CreateData)
 
 	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "8080"
+	}
 	http.ListenAndServe(":"+port, r)
 }
