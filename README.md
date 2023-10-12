@@ -1,4 +1,4 @@
-## [PACKAGE NAME]
+## Data-Processing
 
 This is a Go package for handling data input.
 
@@ -21,4 +21,5 @@ Then, you can use the functions and types in the package as needed.
 ### Building and running the main program
 
 To build and run the main program for the package, run the following command:
+
 go run main.go
