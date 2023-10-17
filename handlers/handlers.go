@@ -7,10 +7,10 @@ import (
 	"strconv"
 	"sync"
 	"time"
+	"math/rand"
 
 	"github.com/Hassanhs-97/Data-Processing/models"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 var (
@@ -25,20 +25,8 @@ var (
 )
 
 func init() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
 
-	rateLimitStr := os.Getenv("RATE_LIMIT")
-	if rateLimitStr == "" {
-		rateLimitStr = "10"
-	}
-
-	var err error
-	rateLimit, err = strconv.Atoi(rateLimitStr)
-	if err != nil {
-		log.Fatalf("Invalid RATE_LIMIT value: %s", rateLimitStr)
-	}
+	rateLimit =  rand.Intn(101) + 100
 
 	monthlyDataLimitStr := os.Getenv("VOLUME_LIMIT")
 	if monthlyDataLimitStr == "" {
